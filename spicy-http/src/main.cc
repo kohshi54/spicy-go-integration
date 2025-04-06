@@ -35,13 +35,11 @@ field-content = field-vchar [ 1*( SP / HTAB / field-vchar ) field-vchar ]
 field-vchar   = VCHAR / obs-text
 obs-text      = %x80-FF
 
-
 token         = 1*tchar   5.6.2. Tokens https://www.rfc-editor.org/rfc/rfc9110#fields.names
 tchar         = "!" / "#" / "$" / "%" / "&" / "'" / "*"
 				/ "+" / "-" / "." / "^" / "_" / "`" / "|" / "~"
 				/ DIGIT / ALPHA
 				; any VCHAR, except delimiters
-*/
 
-// message-body = *OCTET
-//body: bytes &eod;
+message-body  = *OCTET
+*/

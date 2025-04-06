@@ -40,6 +40,7 @@ public type HTTPRequest = unit {
 	start_line:	RequestLine;
 	headers:	FieldLine[];
 	:           NewLine;
+	body:		bytes &eod;
 
 #	on %error(msg: string) {
 #		print "Error when parsing MyHTTP: ", msg;
@@ -49,6 +50,9 @@ public type HTTPRequest = unit {
 		print "%s, %s, %s" % (self.start_line.method, self.start_line.uri, self.start_line.version.number);
 		for (h in self.headers) {
 			print "%s:%s" % (h.field_name, h.field_value);
+		}
+		if (self.body != b"") {
+			print "%s" % self.body;
 		}
 	}
 };

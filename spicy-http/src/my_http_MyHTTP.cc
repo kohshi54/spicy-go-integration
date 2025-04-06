@@ -80,6 +80,7 @@ namespace __hlt_my_http::MyHTTP {
         inline auto __self() { return ::hilti::rt::ValueReference<HTTPRequest>::self(this); }
         std::optional<::hilti::rt::ValueReference<RequestLine>> start_line{};
         std::optional<::hilti::rt::Vector<FieldLine>> headers{};
+        std::optional<::hilti::rt::Bytes> body{};
         void __on_0x25_done();
         inline static ::spicy::rt::Parser __parser{};
         auto __parse_stage1(::hilti::rt::ValueReference<::hilti::rt::Stream>& __data, std::optional<::hilti::rt::stream::SafeConstIterator> __begin, ::hilti::rt::stream::View __cur, ::hilti::rt::Bool __trim, ::hilti::rt::integer::safe<int64_t> __lah, ::hilti::rt::stream::SafeConstIterator __lahe, std::optional<::hilti::rt::RecoverableFailure> __error) -> std::tuple<::hilti::rt::stream::View, ::hilti::rt::integer::safe<int64_t>, ::hilti::rt::stream::SafeConstIterator, std::optional<::hilti::rt::RecoverableFailure>>;
@@ -94,8 +95,8 @@ namespace __hlt_my_http::MyHTTP {
         HTTPRequest(HTTPRequest&&) = default;
         HTTPRequest& operator=(const HTTPRequest&) = default;
         HTTPRequest& operator=(HTTPRequest&&) = default;
-        inline HTTPRequest(std::optional<std::optional<::hilti::rt::ValueReference<RequestLine>>> start_line, std::optional<std::optional<::hilti::rt::Vector<FieldLine>>> headers);
-        template<typename F> void __visit(F _) const { _("start_line", start_line); _("headers", headers); }
+        inline HTTPRequest(std::optional<std::optional<::hilti::rt::ValueReference<RequestLine>>> start_line, std::optional<std::optional<::hilti::rt::Vector<FieldLine>>> headers, std::optional<std::optional<::hilti::rt::Bytes>> body);
+        template<typename F> void __visit(F _) const { _("start_line", start_line); _("headers", headers); _("body", body); }
     };
 
     const ::hilti::rt::RegExp NewLine = ::hilti::rt::RegExp(std::string{"\\r?\\n"}, {});
@@ -137,7 +138,7 @@ namespace __hlt_my_http::MyHTTP {
     const ::hilti::rt::RegExp token = ::hilti::rt::RegExp(std::string{"[!#$%&'*+\\-.^_`|~0-9A-Za-z]+"}, {});
     extern void __hook_HTTPRequest___on_0x25_done(::hilti::rt::ValueReference<HTTPRequest>& __self);
     extern void __hook_HTTPRequest___on_0x25_done(::hilti::rt::ValueReference<__hlt_my_http::MyHTTP::HTTPRequest>& __self);
-    extern void __hook_HTTPRequest___on_0x25_done_acdb(::hilti::rt::ValueReference<HTTPRequest>& __self);
+    extern void __hook_HTTPRequest___on_0x25_done_e70e(::hilti::rt::ValueReference<HTTPRequest>& __self);
     extern void __init_module();
     extern void __register_MyHTTP_FieldLine();
     extern void __register_MyHTTP_HTTPRequest();
@@ -158,7 +159,7 @@ namespace hlt_my_http::MyHTTP::HTTPRequest {
 
 namespace __hlt_my_http::type_info { namespace {
     const ::hilti::rt::TypeInfo __ti_MyHTTP_FieldLine = { "MyHTTP::FieldLine", "MyHTTP::FieldLine", new ::hilti::rt::type_info::Struct(std::vector<::hilti::rt::type_info::struct_::Field>({::hilti::rt::type_info::struct_::Field{ "field_name", &::hilti::rt::type_info::bytes, offsetof(MyHTTP::FieldLine, field_name), false, ::hilti::rt::type_info::struct_::Field::accessor_optional<::hilti::rt::Bytes>() }, ::hilti::rt::type_info::struct_::Field{ "field_value", &::hilti::rt::type_info::bytes, offsetof(MyHTTP::FieldLine, field_value), false, ::hilti::rt::type_info::struct_::Field::accessor_optional<::hilti::rt::Bytes>() }, ::hilti::rt::type_info::struct_::Field{ "__error", &type_info::__ti_optionalx30hilti_RecoverableFailure, offsetof(MyHTTP::FieldLine, __error), true }})) };
-    const ::hilti::rt::TypeInfo __ti_MyHTTP_HTTPRequest = { "MyHTTP::HTTPRequest", "MyHTTP::HTTPRequest", new ::hilti::rt::type_info::Struct(std::vector<::hilti::rt::type_info::struct_::Field>({::hilti::rt::type_info::struct_::Field{ "start_line", &type_info::__ti_value_refx30MyHTTP_RequestLine, offsetof(MyHTTP::HTTPRequest, start_line), false, ::hilti::rt::type_info::struct_::Field::accessor_optional<::hilti::rt::ValueReference<__hlt_my_http::MyHTTP::RequestLine>>() }, ::hilti::rt::type_info::struct_::Field{ "headers", &type_info::__ti_vectorx30MyHTTP_FieldLine, offsetof(MyHTTP::HTTPRequest, headers), false, ::hilti::rt::type_info::struct_::Field::accessor_optional<::hilti::rt::Vector<__hlt_my_http::MyHTTP::FieldLine>>() }, ::hilti::rt::type_info::struct_::Field{ "__error", &type_info::__ti_optionalx30hilti_RecoverableFailure, offsetof(MyHTTP::HTTPRequest, __error), true }})) };
+    const ::hilti::rt::TypeInfo __ti_MyHTTP_HTTPRequest = { "MyHTTP::HTTPRequest", "MyHTTP::HTTPRequest", new ::hilti::rt::type_info::Struct(std::vector<::hilti::rt::type_info::struct_::Field>({::hilti::rt::type_info::struct_::Field{ "start_line", &type_info::__ti_value_refx30MyHTTP_RequestLine, offsetof(MyHTTP::HTTPRequest, start_line), false, ::hilti::rt::type_info::struct_::Field::accessor_optional<::hilti::rt::ValueReference<__hlt_my_http::MyHTTP::RequestLine>>() }, ::hilti::rt::type_info::struct_::Field{ "headers", &type_info::__ti_vectorx30MyHTTP_FieldLine, offsetof(MyHTTP::HTTPRequest, headers), false, ::hilti::rt::type_info::struct_::Field::accessor_optional<::hilti::rt::Vector<__hlt_my_http::MyHTTP::FieldLine>>() }, ::hilti::rt::type_info::struct_::Field{ "body", &::hilti::rt::type_info::bytes, offsetof(MyHTTP::HTTPRequest, body), false, ::hilti::rt::type_info::struct_::Field::accessor_optional<::hilti::rt::Bytes>() }, ::hilti::rt::type_info::struct_::Field{ "__error", &type_info::__ti_optionalx30hilti_RecoverableFailure, offsetof(MyHTTP::HTTPRequest, __error), true }})) };
     const ::hilti::rt::TypeInfo __ti_MyHTTP_RequestLine = { "MyHTTP::RequestLine", "MyHTTP::RequestLine", new ::hilti::rt::type_info::Struct(std::vector<::hilti::rt::type_info::struct_::Field>({::hilti::rt::type_info::struct_::Field{ "method", &::hilti::rt::type_info::bytes, offsetof(MyHTTP::RequestLine, method), false, ::hilti::rt::type_info::struct_::Field::accessor_optional<::hilti::rt::Bytes>() }, ::hilti::rt::type_info::struct_::Field{ "uri", &::hilti::rt::type_info::bytes, offsetof(MyHTTP::RequestLine, uri), false, ::hilti::rt::type_info::struct_::Field::accessor_optional<::hilti::rt::Bytes>() }, ::hilti::rt::type_info::struct_::Field{ "version", &type_info::__ti_value_refx30MyHTTP_Version, offsetof(MyHTTP::RequestLine, version), false, ::hilti::rt::type_info::struct_::Field::accessor_optional<::hilti::rt::ValueReference<__hlt_my_http::MyHTTP::Version>>() }, ::hilti::rt::type_info::struct_::Field{ "__error", &type_info::__ti_optionalx30hilti_RecoverableFailure, offsetof(MyHTTP::RequestLine, __error), true }})) };
     const ::hilti::rt::TypeInfo __ti_MyHTTP_Version = { "MyHTTP::Version", "MyHTTP::Version", new ::hilti::rt::type_info::Struct(std::vector<::hilti::rt::type_info::struct_::Field>({::hilti::rt::type_info::struct_::Field{ "number", &::hilti::rt::type_info::bytes, offsetof(MyHTTP::Version, number), false, ::hilti::rt::type_info::struct_::Field::accessor_optional<::hilti::rt::Bytes>() }, ::hilti::rt::type_info::struct_::Field{ "__error", &type_info::__ti_optionalx30hilti_RecoverableFailure, offsetof(MyHTTP::Version, __error), true }})) };
     const ::hilti::rt::TypeInfo __ti_hilti_RecoverableFailure = { "hilti::RecoverableFailure", "hilti::RecoverableFailure", new ::hilti::rt::type_info::Exception() };
@@ -181,9 +182,10 @@ namespace __hlt_my_http::MyHTTP {
     inline HTTPRequest::HTTPRequest() {
     }
 
-    inline HTTPRequest::HTTPRequest(std::optional<std::optional<::hilti::rt::ValueReference<__hlt_my_http::MyHTTP::RequestLine>>> start_line, std::optional<std::optional<::hilti::rt::Vector<__hlt_my_http::MyHTTP::FieldLine>>> headers) : HTTPRequest() {
+    inline HTTPRequest::HTTPRequest(std::optional<std::optional<::hilti::rt::ValueReference<__hlt_my_http::MyHTTP::RequestLine>>> start_line, std::optional<std::optional<::hilti::rt::Vector<__hlt_my_http::MyHTTP::FieldLine>>> headers, std::optional<std::optional<::hilti::rt::Bytes>> body) : HTTPRequest() {
         if ( start_line ) this->start_line = std::move(*start_line);
         if ( headers ) this->headers = std::move(*headers);
+        if ( body ) this->body = std::move(*body);
     }
 
     
@@ -575,9 +577,10 @@ inline void __hlt_my_http::MyHTTP::HTTPRequest::__on_0x25_done() {
 }
 
 auto __hlt_my_http::MyHTTP::HTTPRequest::__parse_MyHTTP_HTTPRequest_stage2(::hilti::rt::ValueReference<::hilti::rt::Stream>& __data, std::optional<::hilti::rt::stream::SafeConstIterator> __begin, ::hilti::rt::stream::View __cur, ::hilti::rt::Bool __trim, ::hilti::rt::integer::safe<int64_t> __lah, ::hilti::rt::stream::SafeConstIterator __lahe, std::optional<::hilti::rt::RecoverableFailure> __error) -> std::tuple<::hilti::rt::stream::View, ::hilti::rt::integer::safe<int64_t>, ::hilti::rt::stream::SafeConstIterator, std::optional<::hilti::rt::RecoverableFailure>> {
+    ::hilti::rt::StrongReference<::spicy::rt::filter::detail::Filters> __lhs_19;
     auto __self = HTTPRequest::__self();
     ::hilti::rt::detail::checkStack();
-    __location__("my_http.spicy:40:27-51:2");
+    __location__("my_http.spicy:40:27-59:2");
     std::tuple<::hilti::rt::stream::View, ::hilti::rt::integer::safe<int64_t>, ::hilti::rt::stream::SafeConstIterator, std::optional<::hilti::rt::RecoverableFailure>> __result;
     __location__("my_http.spicy:22:20-29:2");
 
@@ -653,8 +656,24 @@ auto __hlt_my_http::MyHTTP::HTTPRequest::__parse_MyHTTP_HTTPRequest_stage2(::hil
 
     // End parsing production: Ctor: anon_9_2 -> /\r?\n/ (regexp);
 
+    __location__("my_http.spicy:44:9");
+
+    // Begin parsing production: Variable: body -> bytes;
+    ::spicy::rt::detail::waitForEod(__data, __cur, (__lhs_19=(::hilti::rt::StrongReference<::spicy::rt::filter::detail::Filters>())));
+    ::hilti::rt::optional::valueOrInit((*__self).body) = __cur.data();
+    __cur = __cur.advance(__cur.size());
+    if ( __trim ) {
+        (*__data).trim(__cur.begin());
+    }
+
+    // End parsing production: Variable: body -> bytes;
+
     (*__self).__error = __error;
-      __location__("my_http.spicy:40:27-51:2");
+      __location__("my_http.spicy:44:2");
+    (void());
+    __error = (*__self).__error;
+    (*__self).__error = __error;
+      __location__("my_http.spicy:40:27-59:2");
     (*__self).__on_0x25_done();
     __error = (*__self).__error;
     ::hilti::rt::debug::dedent(std::string("spicy"));
@@ -765,13 +784,13 @@ auto __hlt_my_http::MyHTTP::HTTPRequest::__parse_headers_stage1(::hilti::rt::Val
 auto __hlt_my_http::MyHTTP::HTTPRequest::__parse_stage1(::hilti::rt::ValueReference<::hilti::rt::Stream>& __data, std::optional<::hilti::rt::stream::SafeConstIterator> __begin, ::hilti::rt::stream::View __cur, ::hilti::rt::Bool __trim, ::hilti::rt::integer::safe<int64_t> __lah, ::hilti::rt::stream::SafeConstIterator __lahe, std::optional<::hilti::rt::RecoverableFailure> __error) -> std::tuple<::hilti::rt::stream::View, ::hilti::rt::integer::safe<int64_t>, ::hilti::rt::stream::SafeConstIterator, std::optional<::hilti::rt::RecoverableFailure>> {
     auto __self = HTTPRequest::__self();
     ::hilti::rt::detail::checkStack();
-    __location__("my_http.spicy:40:27-51:2");
+    __location__("my_http.spicy:40:27-59:2");
     std::tuple<::hilti::rt::stream::View, ::hilti::rt::integer::safe<int64_t>, ::hilti::rt::stream::SafeConstIterator, std::optional<::hilti::rt::RecoverableFailure>> __result;
     try {
         ::hilti::rt::debug::indent(std::string("spicy"));
         std::optional<::hilti::rt::stream::SafeConstIterator> __begin = std::make_optional(__cur.begin());
         (*__self).__error = __error;
-          __location__("my_http.spicy:40:27-51:2");
+          __location__("my_http.spicy:40:27-59:2");
         (void());
         __error = (*__self).__error;
         ::hilti::rt::StrongReference<::hilti::rt::Stream> filtered = ::hilti::rt::StrongReference<::hilti::rt::Stream>();
@@ -780,17 +799,17 @@ auto __hlt_my_http::MyHTTP::HTTPRequest::__parse_stage1(::hilti::rt::ValueRefere
         }
     }
     catch ( const ::std::exception& __except ) {
-          __location__("my_http.spicy:40:27-51:2");
+          __location__("my_http.spicy:40:27-59:2");
         (void());
         (*__self).__error = __error;
-          __location__("my_http.spicy:40:27-51:2");
+          __location__("my_http.spicy:40:27-59:2");
         (void());
         __error = (*__self).__error;
         throw;
     }
 
     (*__self).__error = __error;
-      __location__("my_http.spicy:40:27-51:2");
+      __location__("my_http.spicy:40:27-59:2");
     (void());
     __error = (*__self).__error;
     return __result;
@@ -798,17 +817,17 @@ auto __hlt_my_http::MyHTTP::HTTPRequest::__parse_stage1(::hilti::rt::ValueRefere
 
 extern auto __hlt_my_http::MyHTTP::HTTPRequest::parse1(::hilti::rt::ValueReference<::hilti::rt::Stream>& data, const std::optional<::hilti::rt::stream::View>& cur, const std::optional<::spicy::rt::UnitContext>& context) -> ::hilti::rt::stream::View {
     ::hilti::rt::detail::checkStack();
-    __location__("my_http.spicy:40:27-51:2");
+    __location__("my_http.spicy:40:27-59:2");
     ::hilti::rt::ValueReference<__hlt_my_http::MyHTTP::HTTPRequest> unit = ::hilti::rt::reference::make_value<__hlt_my_http::MyHTTP::HTTPRequest>((__hlt_my_http::MyHTTP::HTTPRequest()));
     ::hilti::rt::stream::View ncur = (cur ? ::hilti::rt::optional::value(cur) : (*data).view());
     ::hilti::rt::integer::safe<int64_t> lahead = ::hilti::rt::integer::safe<std::int64_t>{0};
     ::hilti::rt::stream::SafeConstIterator lahead_end;
     std::optional<::hilti::rt::RecoverableFailure> error = std::optional<::hilti::rt::RecoverableFailure>();
-    __location__("my_http.spicy:40:27-51:2");
+    __location__("my_http.spicy:40:27-59:2");
 
-    // Begin parsing production: Unit: MyHTTP_HTTPRequest -> MyHTTP_RequestLine_2 headers anon_9_2;
+    // Begin parsing production: Unit: MyHTTP_HTTPRequest -> MyHTTP_RequestLine_2 headers anon_9_2 body;
     std::tie(ncur, lahead, lahead_end, error) = (*unit).__parse_stage1(data, std::optional<::hilti::rt::stream::SafeConstIterator>(), ncur, ::hilti::rt::Bool(true), lahead, lahead_end, error);
-    // End parsing production: Unit: MyHTTP_HTTPRequest -> MyHTTP_RequestLine_2 headers anon_9_2;
+    // End parsing production: Unit: MyHTTP_HTTPRequest -> MyHTTP_RequestLine_2 headers anon_9_2 body;
 
     if ( error.has_value() ) {
         throw ::spicy::rt::ParseError(::hilti::rt::fmt(std::string("successful synchronization never confirmed: %s"), ::hilti::rt::optional::value(error)), "");
@@ -819,16 +838,16 @@ extern auto __hlt_my_http::MyHTTP::HTTPRequest::parse1(::hilti::rt::ValueReferen
 
 extern auto __hlt_my_http::MyHTTP::HTTPRequest::parse2(::hilti::rt::ValueReference<__hlt_my_http::MyHTTP::HTTPRequest>& unit, ::hilti::rt::ValueReference<::hilti::rt::Stream>& data, const std::optional<::hilti::rt::stream::View>& cur, const std::optional<::spicy::rt::UnitContext>& context) -> ::hilti::rt::stream::View {
     ::hilti::rt::detail::checkStack();
-    __location__("my_http.spicy:40:27-51:2");
+    __location__("my_http.spicy:40:27-59:2");
     ::hilti::rt::stream::View ncur = (cur ? ::hilti::rt::optional::value(cur) : (*data).view());
     ::hilti::rt::integer::safe<int64_t> lahead = ::hilti::rt::integer::safe<std::int64_t>{0};
     ::hilti::rt::stream::SafeConstIterator lahead_end;
     std::optional<::hilti::rt::RecoverableFailure> error = std::optional<::hilti::rt::RecoverableFailure>();
-    __location__("my_http.spicy:40:27-51:2");
+    __location__("my_http.spicy:40:27-59:2");
 
-    // Begin parsing production: Unit: MyHTTP_HTTPRequest -> MyHTTP_RequestLine_2 headers anon_9_2;
+    // Begin parsing production: Unit: MyHTTP_HTTPRequest -> MyHTTP_RequestLine_2 headers anon_9_2 body;
     std::tie(ncur, lahead, lahead_end, error) = (*unit).__parse_stage1(data, std::optional<::hilti::rt::stream::SafeConstIterator>(), ncur, ::hilti::rt::Bool(true), lahead, lahead_end, error);
-    // End parsing production: Unit: MyHTTP_HTTPRequest -> MyHTTP_RequestLine_2 headers anon_9_2;
+    // End parsing production: Unit: MyHTTP_HTTPRequest -> MyHTTP_RequestLine_2 headers anon_9_2 body;
 
     if ( error.has_value() ) {
         throw ::spicy::rt::ParseError(::hilti::rt::fmt(std::string("successful synchronization never confirmed: %s"), ::hilti::rt::optional::value(error)), "");
@@ -839,18 +858,18 @@ extern auto __hlt_my_http::MyHTTP::HTTPRequest::parse2(::hilti::rt::ValueReferen
 
 extern auto __hlt_my_http::MyHTTP::HTTPRequest::parse3(::hilti::rt::ValueReference<::spicy::rt::ParsedUnit>& gunit, ::hilti::rt::ValueReference<::hilti::rt::Stream>& data, const std::optional<::hilti::rt::stream::View>& cur, const std::optional<::spicy::rt::UnitContext>& context) -> ::hilti::rt::stream::View {
     ::hilti::rt::detail::checkStack();
-    __location__("my_http.spicy:40:27-51:2");
+    __location__("my_http.spicy:40:27-59:2");
     ::hilti::rt::ValueReference<__hlt_my_http::MyHTTP::HTTPRequest> unit = ::hilti::rt::reference::make_value<__hlt_my_http::MyHTTP::HTTPRequest>((__hlt_my_http::MyHTTP::HTTPRequest()));
     ::spicy::rt::ParsedUnit::initialize((*gunit), unit, &type_info::__ti_MyHTTP_HTTPRequest);
     ::hilti::rt::stream::View ncur = (cur ? ::hilti::rt::optional::value(cur) : (*data).view());
     ::hilti::rt::integer::safe<int64_t> lahead = ::hilti::rt::integer::safe<std::int64_t>{0};
     ::hilti::rt::stream::SafeConstIterator lahead_end;
     std::optional<::hilti::rt::RecoverableFailure> error = std::optional<::hilti::rt::RecoverableFailure>();
-    __location__("my_http.spicy:40:27-51:2");
+    __location__("my_http.spicy:40:27-59:2");
 
-    // Begin parsing production: Unit: MyHTTP_HTTPRequest -> MyHTTP_RequestLine_2 headers anon_9_2;
+    // Begin parsing production: Unit: MyHTTP_HTTPRequest -> MyHTTP_RequestLine_2 headers anon_9_2 body;
     std::tie(ncur, lahead, lahead_end, error) = (*unit).__parse_stage1(data, std::optional<::hilti::rt::stream::SafeConstIterator>(), ncur, ::hilti::rt::Bool(true), lahead, lahead_end, error);
-    // End parsing production: Unit: MyHTTP_HTTPRequest -> MyHTTP_RequestLine_2 headers anon_9_2;
+    // End parsing production: Unit: MyHTTP_HTTPRequest -> MyHTTP_RequestLine_2 headers anon_9_2 body;
 
     if ( error.has_value() ) {
         throw ::spicy::rt::ParseError(::hilti::rt::fmt(std::string("successful synchronization never confirmed: %s"), ::hilti::rt::optional::value(error)), "");
@@ -1332,20 +1351,25 @@ auto __hlt_my_http::MyHTTP::Version::__parse_stage1(::hilti::rt::ValueReference<
     return __result;
 }
 
-extern void __hlt_my_http::MyHTTP::__hook_HTTPRequest___on_0x25_done_acdb(::hilti::rt::ValueReference<HTTPRequest>& __self) {
+extern void __hlt_my_http::MyHTTP::__hook_HTTPRequest___on_0x25_done_e70e(::hilti::rt::ValueReference<HTTPRequest>& __self) {
     ::hilti::rt::detail::checkStack();
-      __location__("my_http.spicy:46:3");
+      __location__("my_http.spicy:51:3");
     ::hilti::rt::print(::hilti::rt::fmt(std::string("%s, %s, %s"), ::hilti::rt::optional::value((*::hilti::rt::optional::value((*__self).start_line)).method), ::hilti::rt::optional::value((*::hilti::rt::optional::value((*__self).start_line)).uri), ::hilti::rt::optional::value((*::hilti::rt::optional::value((*::hilti::rt::optional::value((*__self).start_line)).version)).number)), ::hilti::rt::Bool(true));
-      __location__("my_http.spicy:47:3-49:4");
+      __location__("my_http.spicy:52:3-54:4");
 
     {
         auto __seq = ::hilti::rt::optional::value((*__self).headers);
         for ( const auto& h : ::hilti::rt::range(__seq) ) {
-              __location__("my_http.spicy:48:4");
+              __location__("my_http.spicy:53:4");
             ::hilti::rt::print(::hilti::rt::fmt(std::string("%s:%s"), ::hilti::rt::optional::value(h.field_name), ::hilti::rt::optional::value(h.field_value)), ::hilti::rt::Bool(true));
         }
     }
 
+      __location__("my_http.spicy:55:3-57:4");
+    if ( ::hilti::rt::optional::value((*__self).body) != ""_b ) {
+          __location__("my_http.spicy:56:4");
+        ::hilti::rt::print(::hilti::rt::fmt(std::string("%s"), ::hilti::rt::optional::value((*__self).body)), ::hilti::rt::Bool(true));
+    }
 }
 
 extern void __hlt_my_http::MyHTTP::__init_module() {
@@ -1414,6 +1438,6 @@ extern auto hlt_my_http::MyHTTP::HTTPRequest::parse3(::hilti::rt::ValueReference
 }
 
 /* __HILTI_LINKER_V1__
-{"joins":{"__hlt_my_http::MyHTTP::__hook_HTTPRequest___on_0x25_done":[{"aux_types":[{"forward_decl":true,"forward_decl_prio":false,"id":"__hlt_my_http::MyHTTP::HTTPRequest","type":"struct HTTPRequest"}],"callee":{"args":[{"id":"__self","type":"::hilti::rt::ValueReference<HTTPRequest>&"}],"attribute":"","const":false,"id":"__hlt_my_http::MyHTTP::__hook_HTTPRequest___on_0x25_done_acdb","linkage":"extern","result":"void"},"declare_only":false,"id":"__hlt_my_http::MyHTTP::__hook_HTTPRequest___on_0x25_done","priority":0},{"aux_types":[{"forward_decl":true,"forward_decl_prio":false,"id":"__hlt_my_http::MyHTTP::HTTPRequest","type":"struct HTTPRequest"}],"callee":{"args":[{"id":"__self","type":"::hilti::rt::ValueReference<__hlt_my_http::MyHTTP::HTTPRequest>&"}],"attribute":"","const":false,"id":"__hlt_my_http::MyHTTP::__on_0x25_done","linkage":"","result":"void"},"declare_only":true,"id":"__hlt_my_http::MyHTTP::__hook_HTTPRequest___on_0x25_done","priority":0}]},"module":"MyHTTP","namespace":"__hlt_my_http::MyHTTP","path":"/home/kohshi54/spicy-go-integration/spicy-http/my_http.spicy","version":1}
+{"joins":{"__hlt_my_http::MyHTTP::__hook_HTTPRequest___on_0x25_done":[{"aux_types":[{"forward_decl":true,"forward_decl_prio":false,"id":"__hlt_my_http::MyHTTP::HTTPRequest","type":"struct HTTPRequest"}],"callee":{"args":[{"id":"__self","type":"::hilti::rt::ValueReference<HTTPRequest>&"}],"attribute":"","const":false,"id":"__hlt_my_http::MyHTTP::__hook_HTTPRequest___on_0x25_done_e70e","linkage":"extern","result":"void"},"declare_only":false,"id":"__hlt_my_http::MyHTTP::__hook_HTTPRequest___on_0x25_done","priority":0},{"aux_types":[{"forward_decl":true,"forward_decl_prio":false,"id":"__hlt_my_http::MyHTTP::HTTPRequest","type":"struct HTTPRequest"}],"callee":{"args":[{"id":"__self","type":"::hilti::rt::ValueReference<__hlt_my_http::MyHTTP::HTTPRequest>&"}],"attribute":"","const":false,"id":"__hlt_my_http::MyHTTP::__on_0x25_done","linkage":"","result":"void"},"declare_only":true,"id":"__hlt_my_http::MyHTTP::__hook_HTTPRequest___on_0x25_done","priority":0}]},"module":"MyHTTP","namespace":"__hlt_my_http::MyHTTP","path":"/home/kohshi54/spicy-go-integration/spicy-http/my_http.spicy","version":1}
 */
 

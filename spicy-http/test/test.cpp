@@ -41,6 +41,16 @@ TEST_F(SpicyHTTPTest, parse_ok_test2) {
 	EXPECT_EQ(buffer.str(), "GET, /index.html, 1.1\nHost:example.com\n");
 }
 
+TEST_F(SpicyHTTPTest, parse_ok_test3) {
+	std::istringstream testInput("GET /index.html HTTP/1.1\r\nHost: example.com\r\n\r\nhello=world");
+	std::stringstream buffer;
+	std::streambuf* oldCoutBuffer = std::cout.rdbuf(buffer.rdbuf());
+	SpicyHTTPParser(testInput);
+	std::cout.rdbuf(oldCoutBuffer);
+	EXPECT_EQ(buffer.str(), "GET, /index.html, 1.1\nHost:example.com\nhello=world\n");
+}
+
+
 int main(int argc, char **argv) {
 	hilti::rt::init();
 	spicy::rt::init();
