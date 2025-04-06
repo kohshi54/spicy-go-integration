@@ -39,8 +39,15 @@ type FieldLine = unit {
 public type HTTPRequest = unit {
 	start_line:	RequestLine;
 	headers:	FieldLine[];
-	:           NewLine;
-	body:		bytes &eod;
+	:			NewLine;
+
+	var clength: uint64 = 0;
+	on headers foreach {
+		if ( $$.field_name == b"Content-Length" ) {
+			self.clength = $$.field_value.to_uint();
+		}
+	}
+	body: bytes &size=self.clength;
 
 #	on %error(msg: string) {
 #		print "Error when parsing MyHTTP: ", msg;
