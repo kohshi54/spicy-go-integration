@@ -14,6 +14,24 @@ TEST_F(SpicyHTTPTest, simple_test) {
 	EXPECT_EQ(buffer.str(), "hello\n");
 }
 
+TEST_F(SpicyHTTPTest, parse_ok_test) {
+	std::istringstream testInput("GET /index.html HTTP/1.1\r\n");
+	std::stringstream buffer;
+	std::streambuf* oldCoutBuffer = std::cout.rdbuf(buffer.rdbuf());
+	SpicyHTTPParser(testInput);
+	std::cout.rdbuf(oldCoutBuffer);
+	EXPECT_EQ(buffer.str(), "GET, /index.html, 1.1\n");
+}
+
+TEST_F(SpicyHTTPTest, parse_error_test) {
+	std::istringstream testInput("GET a /index.html HTTP/1.1\r\n");
+	std::stringstream buffer;
+	std::streambuf* oldCerrBuffer = std::cerr.rdbuf(buffer.rdbuf());
+	SpicyHTTPParser(testInput);
+	std::cerr.rdbuf(oldCerrBuffer);
+	EXPECT_EQ(buffer.str(), "parse error\n");
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

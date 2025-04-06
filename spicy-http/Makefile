@@ -1,28 +1,35 @@
 NAME = spicy_http
-CC = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g
+CC = clang++
+CXXFLAGS = -Wall -Wextra -std=c++17 #-fsanitize=address -g -Werror
+CXXFLAGS += $(shell spicy-config --cxxflags)
+LDFLAGS  := $(shell spicy-config --ldflags)
 DEPFLAGS = -MMD -MP -MF $(DEP_DIR)$*.d
 
 SRC_DIR		= src/
 OBJ_DIR		= obj/
 DEP_DIR		= dep/
-SRCS = main.cpp spicy_http.cpp
-OBJS = $(addprefix $(OBJ_DIR), $(SRCS:%.cpp=%.o))
-DEPS = $(addprefix $(DEP_DIR), $(SRCS:%.cpp=%.d))
+SRCS = main.cc spicy_http.cc my_http_MyHTTP.cc my_http___linker__.cc
+OBJS = $(addprefix $(OBJ_DIR), $(SRCS:%.cc=%.o))
+DEPS = $(addprefix $(DEP_DIR), $(SRCS:%.cc=%.d))
+
+SPICY = src/my_http*
 
 INCLUDES = -I./include
-vpath %.cpp $(SRC_DIR)
+vpath %.cc $(SRC_DIR)
 
 all :  $(OBJ_DIR) $(DEP_DIR) $(NAME)
 
 $(OBJ_DIR) $(DEP_DIR) :
 	@mkdir -p $@
 
-$(OBJ_DIR)%.o: %.cpp
+$(OBJ_DIR)%.o: %.cc
 	$(CC) $(CXXFLAGS) $(DEPFLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME) : $(OBJS)
-	$(CC) $(CXXFLAGS) $(OBJS) -o $(NAME)
+$(NAME) : $(OBJS) $(SPICY)
+	$(CC) $(CXXFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
+
+$(SPICY) : my_http.spicy
+	spicyc -x ./src/my_http my_http.spicy
 
 clean : 
 	rm -rf $(OBJS) $(DEPS) $(DEP_DIR) $(OBJ_DIR)
