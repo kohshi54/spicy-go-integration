@@ -23,3 +23,19 @@ go.work.sum
 
 # env file
 .env
+
+# cpp
+*/build/*
+*/dep/*
+*/obj/*
+
+# Spicy obj
+*/*.hlto
+
+# vim
+*.swp
+
+# executable
+spicy-go/spicy-go
+spicy-http/spicy_http
+
