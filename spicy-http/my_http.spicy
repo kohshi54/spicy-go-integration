@@ -4,20 +4,51 @@ const Token      = /[^ \t\r\n]+/;
 const WhiteSpace = /[ \t]+/;
 const NewLine    = /\r?\n/;
 
+# defined on rfc9110 https://www.rfc-editor.org/rfc/rfc9110#section-5.5
+const token = /[!#$%&'*+\-.^_`|~0-9A-Za-z]+/;
+const OWS	= /[ \t]*/;
+
+# field-content = field-vchar [ 1*( SP / HTAB / field-vchar ) field-vchar ]
+# field-vchar   = [\x21-\x7E\x80-\xFF]
+const field_value = /([\x21-\x7E\x80-\xFF]([ \t\x21-\x7E\x80-\xFF]+[\x21-\x7E\x80-\xFF])?)*/;
+const delim = /:/;
+
 type Version = unit {
     :       /HTTP\//;
     number: /[0-9]+\.[0-9]+/;
 };
 
-public type RequestLine = unit {
+type RequestLine = unit {
     method:  Token;
     :        WhiteSpace;
     uri:     Token;
     :        WhiteSpace;
     version: Version;
     :        NewLine;
+};
 
-    on %done {
-		print self.method, self.uri, self.version.number;
-    }
+type FieldLine = unit {
+	field_name:		token;
+	:				delim;
+	:				OWS;
+	field_value:	field_value;
+	:				OWS;
+	:				NewLine;
+};
+
+public type HTTPRequest = unit {
+	start_line:	RequestLine;
+	headers:	FieldLine[];
+	:           NewLine;
+
+#	on %error(msg: string) {
+#		print "Error when parsing MyHTTP: ", msg;
+#	}
+
+	on %done {
+		print "%s, %s, %s" % (self.start_line.method, self.start_line.uri, self.start_line.version.number);
+		for (h in self.headers) {
+			print "%s:%s" % (h.field_name, h.field_value);
+		}
+	}
 };

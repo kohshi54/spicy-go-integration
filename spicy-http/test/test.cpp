@@ -15,7 +15,7 @@ TEST_F(SpicyHTTPTest, simple_test) {
 }
 
 TEST_F(SpicyHTTPTest, parse_ok_test) {
-	std::istringstream testInput("GET /index.html HTTP/1.1\r\n");
+	std::istringstream testInput("GET /index.html HTTP/1.1\r\n\r\n");
 	std::stringstream buffer;
 	std::streambuf* oldCoutBuffer = std::cout.rdbuf(buffer.rdbuf());
 	SpicyHTTPParser(testInput);
@@ -32,7 +32,21 @@ TEST_F(SpicyHTTPTest, parse_error_test) {
 	EXPECT_EQ(buffer.str(), "parse error\n");
 }
 
+TEST_F(SpicyHTTPTest, parse_ok_test2) {
+	std::istringstream testInput("GET /index.html HTTP/1.1\r\nHost: example.com\r\n\r\n");
+	std::stringstream buffer;
+	std::streambuf* oldCoutBuffer = std::cout.rdbuf(buffer.rdbuf());
+	SpicyHTTPParser(testInput);
+	std::cout.rdbuf(oldCoutBuffer);
+	EXPECT_EQ(buffer.str(), "GET, /index.html, 1.1\nHost:example.com\n");
+}
+
 int main(int argc, char **argv) {
+	hilti::rt::init();
+	spicy::rt::init();
     ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+	int result = RUN_ALL_TESTS();
+	spicy::rt::done();
+	hilti::rt::done();
+    return result;
 }

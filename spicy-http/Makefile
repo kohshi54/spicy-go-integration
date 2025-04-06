@@ -17,6 +17,10 @@ SPICY = src/my_http*
 INCLUDES = -I./include
 vpath %.cc $(SRC_DIR)
 
+# Alternative way to build
+# all:
+# 	spicy-build -S -o a.out src/main.cc src/spicy_http.cc my_http.spicy
+
 all :  $(OBJ_DIR) $(DEP_DIR) $(NAME)
 
 $(OBJ_DIR) $(DEP_DIR) :

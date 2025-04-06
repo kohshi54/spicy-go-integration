@@ -9,10 +9,9 @@ void ft_http() {
 }
 
 void SpicyHTTPParser(std::istream& in) {
-	hilti::rt::init();
-	spicy::rt::init();
 	spicy::rt::Driver driver;
-	auto parser = driver.lookupParser("MyHTTP::RequestLine");
+	// auto parser = driver.lookupParser("MyHTTP::RequestLine");
+	auto parser = driver.lookupParser("MyHTTP::HTTPRequest");
 	assert(parser);
 
 	try {
@@ -22,6 +21,4 @@ void SpicyHTTPParser(std::istream& in) {
 		// std::cerr << e.what() << std::endl;
 		std::cerr << "parse error" << std::endl;
 	}
-	spicy::rt::done();
-	hilti::rt::done();
 }
