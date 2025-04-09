@@ -10,7 +10,7 @@ Spicy is a domain-specific language (DSL) designed for protocol parsing.
 By writing a parser in Spicy, you can generate efficient C++ code via the Spicy compiler (`spicyc`).  
 This improves both development speed and error handling.  
 
-In this project, the parsing rules are defined in [`my_http.spicy`](spicy-http/my_http.spicy).
+In this project, the parsing rules are defined in [`my_http.spicy`](my_http.spicy).
 
 ---
 ## Supported Features
@@ -28,7 +28,7 @@ It currently supports:
 
 ## Build
 
-The provided [`Makefile`](spicy-http/Makefile) uses `spicyc` to compile the Spicy script into C++ code, which is placed in the [`src`](spicy-http/src) directory.  
+The provided [`Makefile`](Makefile) uses `spicyc` to compile the Spicy script into C++ code, which is placed in the [`src`](src) directory.  
 It then links the generated code with custom C++ source files to produce the executable `./spicy_http`.
 
 To build:
@@ -52,13 +52,13 @@ Sample output:
 ## Test
 
 Tests are written using GoogleTest.
-[`CMakeLists.txt`](spicy-http/CMakeLists.txt) is used to configure and build the test environment.
-All test cases are located in the [`test/`](spicy-http/test/) directory and can be compiled and run with:
+[`CMakeLists.txt`](CMakeLists.txt) is used to configure and build the test environment.
+All test cases are located in the [`test/`](test/) directory and can be compiled and run with:
 ```bash
 make test
 ```
 
-To add a new test case, either update [`test/test.cpp`](spicy-http/test/test.cpp) or add a new source file and include it in CMakeLists.txt.
+To add a new test case, either update [`test/test.cpp`](test/test.cpp) or add a new source file and include it in CMakeLists.txt.
 
 Sample test output:
 <img width="1468" alt="Test Example" src="https://github.com/user-attachments/assets/437748ba-17de-4504-9fda-4437cf5c4d3c" />
